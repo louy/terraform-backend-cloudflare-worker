@@ -39,3 +39,14 @@ terraform {
   }
 }
 ```
+
+**Caution:** Changing your credentials after running `terraform init` is not supported as it's not straightforward. If that's needed, try taking a copy of your state before changing your credentials, then uploading it after you make the change:
+```sh
+# Before changing your credentials
+tf state pull > state-backup.tfstate
+
+# Change your credentials...
+wrangler publish
+
+# After changing your credentials (including in the terraform config)
+tf state push state-backup.tfstate
