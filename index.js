@@ -36,9 +36,9 @@ async function handleRequest(request) {
       case request.method === 'DELETE' && requestURL.pathname === STATE_ENDPOINT:
         return await deleteState();
       case request.method === LOCK_METHOD && requestURL.pathname === LOCK_ENDPOINT:
-        return lockState(request.body);
+        return await lockState(await request.text());
       case request.method === UNLOCK_METHOD && requestURL.pathname === UNLOCK_ENDPOINT:
-        return unlockState(request.body);
+        return await unlockState(await request.text());
     }
     
     return new Response('Nothing found at ' + requestURL.pathname, {status: 404});
@@ -111,11 +111,30 @@ async function deleteState() {
 }
 
 async function lockState(body) {
-  throw new Error("Not implemented");
-  return new Response('Locked state');
+  const existingLock = await STATE_NAMESPACE.get(LOCK_KEY);
+  if (existingLock) {
+    return new Response(existingLock, {
+      status: 423,
+      headers: {
+        'Content-type': 'application/json',
+        'Cache-Control': 'no-store',
+      },
+    });
+  }
+  await STATE_NAMESPACE.put(LOCK_KEY, body);
+  return new Response(body, {
+    headers: {
+      'Content-type': 'application/json',
+      'Cache-Control': 'no-store',
+    },
+  });
 }
 
 async function unlockState(body) {
-  throw new Error("Not implemented");
-  return new Response('Unlocked state');
+  await STATE_NAMESPACE.delete(LOCK_KEY);
+  return new Response('', {
+    headers: {
+      'Cache-Control': 'no-store',
+    },
+  });
 }
