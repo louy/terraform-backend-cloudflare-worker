@@ -1,0 +1,11 @@
+{
+  "name": "terraform-backend-cloudflare-worker",
+  "version": "1.0.0",
+  "description": "A terraform backend implementation using cloudflare workers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Louay Alakkad <louay@alakkad.me>",
+  "license": "MIT"
+}
