@@ -1,6 +1,11 @@
 # Terraform Backend: Cloudflare Worker
 A [terraform backend](https://www.terraform.io/docs/backends/types/http.html) implementation using cloudflare workers.
 
+## So what's this?
+This repo contains a [Cloudflare Worker](https://developers.cloudflare.com/workers/) that can be used as a remote state backend for terraform. The advantage of storing this in something like CloudFlare instead of AWS S3 is that it's much easier to set up, and most of my hobby projects tend to use CloudFlare anyway.
+
+This backend supports state locks and an having arbitrary number of terraform states on a single worker (using different pathnames).
+
 ## Getting started
 You'll need to install both [Cloudflare Wrangler CLI](https://github.com/cloudflare/wrangler#installation) and [Terraform CLI](https://learn.hashicorp.com/terraform/getting-started/install.html).
 
