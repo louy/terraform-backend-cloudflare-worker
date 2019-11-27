@@ -5,10 +5,15 @@ const PASSWORD = 'CHANGE ME!';
 
 const STATE_ENDPOINT = '/';
 const UPDATE_METHOD = 'POST';
+const LOCK_ENDPOINT = '/';
+const LOCK_METHOD = 'LOCK';
+const UNLOCK_ENDPOINT = '/';
+const UNLOCK_METHOD = 'UNLOCK';
 
 // CF Worker KV configuration
 const STATE_NAMESPACE = TERRAFORM;
 const STATE_KEY = 'state';
+const LOCK_KEY = 'lock';
 
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request))
@@ -30,6 +35,10 @@ async function handleRequest(request) {
         return await setState(await request.text());
       case request.method === 'DELETE' && requestURL.pathname === STATE_ENDPOINT:
         return await deleteState();
+      case request.method === LOCK_METHOD && requestURL.pathname === LOCK_ENDPOINT:
+        return lockState(request.body);
+      case request.method === UNLOCK_METHOD && requestURL.pathname === UNLOCK_ENDPOINT:
+        return unlockState(request.body);
     }
     
     return new Response('Nothing found at ' + requestURL.pathname, {status: 404});
@@ -99,4 +108,14 @@ async function deleteState() {
       'Cache-Control': 'no-store',
     },
   });
+}
+
+async function lockState(body) {
+  throw new Error("Not implemented");
+  return new Response('Locked state');
+}
+
+async function unlockState(body) {
+  throw new Error("Not implemented");
+  return new Response('Unlocked state');
 }
