@@ -1,4 +1,4 @@
-name = "terraform-backend-cloudflare-worker"
+name = "terraform-backend"
 type = "javascript"
 account_id = "CHANGE ME"
 workers_dev = true

@@ -31,14 +31,14 @@ wrangler publish
 You should get back a message similar to the following:
 ```
 💁  JavaScript project found. Skipping unnecessary build!
-✨  Successfully published your script to https://terraform-backend-cloudflare-worker.ACCOUNT_NAME.workers.dev
+✨  Successfully published your script to https://terraform-backend.ACCOUNT_NAME.workers.dev
 ```
 
 Congrats! You're done. This will give you the url for your terraform backend, which you should then be able to add to your terraform:
 ```hcl
 terraform {
   backend "http" {
-    address = "https://terraform-backend-cloudflare-worker.ACCOUNT_NAME.workers.dev/"
+    address = "https://terraform-backend.ACCOUNT_NAME.workers.dev/"
     username = "CHANGE ME!"
     password = "CHANGE ME!"
   }
