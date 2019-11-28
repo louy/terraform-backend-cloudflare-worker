@@ -20,6 +20,10 @@
     "**/*.js": [
       "npx prettier --write",
       "git add"
+    ],
+    "**/*.tf{,vars}": [
+      "terraform fmt",
+      "git add"
     ]
   }
 }
